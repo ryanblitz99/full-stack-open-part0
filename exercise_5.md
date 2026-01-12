@@ -3,15 +3,24 @@ sequenceDiagram
     participant browser
     participant server
 
-    Note over Browser: User writes note & clicks "Save"
-    Note over Browser: `document.getElementById('notes_form')` instructs the code to fetch a reference to the HTML form element on the page that has the ID "notes_form" and to register an event handler to handle the form's submit event.
+    browser->> server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    activate server
+    server->> browser: HTML document
+    deactivate server
 
-    Browser->>Server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-    Note right of Browser: Payload: { content: "...", "date": "..." }
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    activate server
+    server-->>browser: the css file
+    deactivate server
 
-    Server-->>Browser: 201 Created
-    Note left of Server: Response: { "message": "note created" }
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    activate server
+    server-->>browser: the JavaScript file
+    deactivate server
 
-    Note over Browser: Console logs: {"message":"note created"}
-
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+    activate server
+    server-->>browser:
+    [{content: "bnmb", date: "2026-01-11T21:50:51.215Z"},....]
+    deactivate server
 ```
